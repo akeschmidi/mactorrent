@@ -1,0 +1,51 @@
+name: MacTorrent
+options:
+  bundleIdPrefix: ch.stefan
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+
+targets:
+  TorrentKit:
+    type: framework
+    platform: macOS
+    sources:
+      - path: Sources/TorrentKit
+    settings:
+      base:
+        PRODUCT_MODULE_NAME: TorrentKit
+        PRODUCT_BUNDLE_IDENTIFIER: ch.stefan.mactorrent.torrentkit
+        GENERATE_INFOPLIST_FILE: YES
+        SKIP_INSTALL: YES
+
+  MacTorrent:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/App
+    resources:
+      - path: Resources/Info.plist
+        buildPhase: none
+    settings:
+      base:
+        PRODUCT_NAME: MacTorrent
+        PRODUCT_BUNDLE_IDENTIFIER: ch.stefan.mactorrent
+        INFOPLIST_FILE: Resources/Info.plist
+    dependencies:
+      - target: TorrentKit
+
+schemes:
+  MacTorrent:
+    build:
+      targets:
+        MacTorrent: all
+    run:
+      config: Debug
