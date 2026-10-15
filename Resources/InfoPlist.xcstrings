@@ -1,0 +1,22 @@
+{
+  "sourceLanguage": "de",
+  "strings": {
+    "NSLocalNetworkUsageDescription": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacTorrent verbindet sich mit Peers im lokalen Netzwerk, um Dateien auszutauschen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacTorrent connects to peers on the local network to exchange files."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

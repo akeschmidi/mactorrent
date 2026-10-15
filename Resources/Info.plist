@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>de</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>de</string>
+        <string>en</string>
+    </array>
     <key>CFBundleName</key>
     <string>MacTorrent</string>
     <key>CFBundleDisplayName</key>
@@ -11,7 +18,9 @@
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.1.0</string>
+    <string>1.0</string>
+    <key>CFBundleIconName</key>
+    <string>AppIcon</string>
     <key>CFBundleExecutable</key>
     <string>MacTorrent</string>
     <key>CFBundlePackageType</key>
@@ -22,11 +31,6 @@
     <string>Stefan</string>
     <key>NSHighResolutionCapable</key>
     <true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
     <key>NSLocalNetworkUsageDescription</key>
     <string>MacTorrent verbindet sich mit Peers im lokalen Netzwerk, um Dateien auszutauschen.</string>
     <key>NSLocalNetworkWakeData</key>
@@ -49,6 +53,17 @@
                     <string>torrent</string>
                 </array>
             </dict>
+        </dict>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>BitTorrent Magnet</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>magnet</string>
+            </array>
         </dict>
     </array>
     <key>CFBundleDocumentTypes</key>

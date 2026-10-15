@@ -28,6 +28,7 @@ public struct TorrentInfo: Identifiable, Sendable {
     public let entries: [TorrentEntry]
     public let totalSize: Int64
     public let trackerURLs: [URL]
+    public let isPrivate: Bool
     public let created: Date?
 
     public var numberOfPieces: Int { pieceHashes.count }
@@ -35,7 +36,7 @@ public struct TorrentInfo: Identifiable, Sendable {
 
     public init(id: UUID = UUID(), name: String, infoHash: Data, infoHashHex: String,
                 pieceLength: Int, pieceHashes: [Data], entries: [TorrentEntry],
-                totalSize: Int64, trackerURLs: [URL], created: Date?) {
+                totalSize: Int64, trackerURLs: [URL], isPrivate: Bool = false, created: Date?) {
         self.id = id
         self.name = name
         self.infoHash = infoHash
@@ -45,6 +46,7 @@ public struct TorrentInfo: Identifiable, Sendable {
         self.entries = entries
         self.totalSize = totalSize
         self.trackerURLs = trackerURLs
+        self.isPrivate = isPrivate
         self.created = created
     }
 }
@@ -59,6 +61,16 @@ public struct TransferProgress: Equatable, Sendable {
     public var isDone: Bool
     public var downSpeed: Int64 = 0   // Bytes/s
     public var upSpeed: Int64 = 0     // Bytes/s
+    public var verifiedBytes: Int64 = 0  // Bytes der geprüften Pieces
+    public var dhtPeers: Int = 0         // über DHT gefundene Peers (Summe der Sitzung)
+    public var wantedBytes: Int64 = 0    // Bytes der gewünschten Dateien (0 = unbekannt → Gesamtgröße)
+
+    /// Restzeit in Sekunden, nil wenn unbekannt.
+    public func eta(totalSize: Int64) -> TimeInterval? {
+        guard downSpeed > 0, !isDone else { return nil }
+        let total = wantedBytes > 0 ? wantedBytes : totalSize
+        return Double(max(0, total - verifiedBytes)) / Double(downSpeed)
+    }
 
     public var fraction: Double {
         totalPieces == 0 ? 0 : Double(downloadedPieces) / Double(totalPieces)
@@ -70,17 +82,19 @@ public enum TorrentError: Error, CustomStringConvertible {
     case missingInfoDict
     case invalidPieceHash
     case unsupportedFormat
+    case unsafePath
     case alreadyRunning
     case notRunning
 
     public var description: String {
         switch self {
-        case .notATorrent: "File ist kein gültiges .torrent (bencode)"
-        case .missingInfoDict: "info-Dictionary fehlt"
-        case .invalidPieceHash: "Stückweises Hash (20 Bytes) fehlt"
-        case .unsupportedFormat: "Format nicht unterstützt"
-        case .alreadyRunning: "Torrent läuft bereits"
-        case .notRunning: "Torrent läuft nicht"
+        case .notATorrent: String(localized: "File ist kein gültiges .torrent (bencode)", bundle: .main)
+        case .missingInfoDict: String(localized: "info-Dictionary fehlt", bundle: .main)
+        case .invalidPieceHash: String(localized: "Stückweises Hash (20 Bytes) fehlt", bundle: .main)
+        case .unsupportedFormat: String(localized: "Format nicht unterstützt", bundle: .main)
+        case .unsafePath: String(localized: "Torrent enthält unsichere Dateipfade (z. B. „..“) und wurde abgelehnt", bundle: .main)
+        case .alreadyRunning: String(localized: "Torrent läuft bereits", bundle: .main)
+        case .notRunning: String(localized: "Torrent läuft nicht", bundle: .main)
         }
     }
 }

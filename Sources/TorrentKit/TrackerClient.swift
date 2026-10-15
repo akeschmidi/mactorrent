@@ -1,7 +1,8 @@
 import Foundation
 import Network
 
-/// BEPEF-Tracker-Client: announce über HTTP(S), bencoded Query.
+/// Tracker-Announce über HTTP. Query ist application/x-www-form-urlencoded (BEP 3),
+/// die Antwort ist bencoded.
 public struct TrackerClient {
     public struct Result: Sendable {
         public var peers: [PeerAddress]
@@ -9,7 +10,7 @@ public struct TrackerClient {
         public var failureReason: String?
     }
 
-    /// Ruft einen Tracker an. Query als raw bencoded Data (Tracker-Anfrage).
+    /// Ruft einen Tracker an. `info_hash` und `peer_id` gehen als rohe 20 Bytes in die Query.
     public static func announce(
         url: URL,
         infoHash: Data,
@@ -17,30 +18,43 @@ public struct TrackerClient {
         port: Int,
         uploaded: Int64,
         downloaded: Int64,
+        left: Int64,
         event: String?
     ) async throws -> Result {
-        var query: [String: Any] = [
-            "info_hash": infoHash,
-            "peer_id": peerID,
-            "port": port,
-            "uploaded": uploaded,
-            "downloaded": downloaded,
-            "num_want": 100,
-            "compact": 1
+        if !NetworkPolicy.shared.allowLocalTrackers, NetworkPolicy.isLocalHost(url.host) {
+            throw HTTPClient.HTTPError(message: String(localized: "Tracker im lokalen Netz blockiert (\(url.host ?? ""))", bundle: .main))
+        }
+        // Anonymer Modus: dem Tracker keine Transfer-Zahlen verraten (er braucht nur `left`).
+        let anon = NetworkPolicy.shared.anonymous
+        let uploaded = anon ? 0 : uploaded, downloaded = anon ? 0 : downloaded
+        if url.scheme?.lowercased() == "udp" {
+            return try await UDPTracker.announce(url: url, infoHash: infoHash, peerID: peerID, port: port,
+                                                 uploaded: uploaded, downloaded: downloaded, left: left, event: event)
+        }
+        var items = [
+            "info_hash=\(percentEncodeRaw(infoHash))",
+            "peer_id=\(percentEncodeRaw(peerID))",
+            "port=\(port)",
+            "uploaded=\(uploaded)",
+            "downloaded=\(downloaded)",
+            "left=\(max(0, left))",
+            "compact=1",
+            "numwant=100"
         ]
-        if let event { query["event"] = event }
-        let queryData = try BB.encode(query)
-
-        var base = url.absoluteString
-        base += (base.contains("?") ? "&" : "?")
-        base += percentEncodeRaw(queryData)
-
-        guard let requestURL = URL(string: base) else {
+        if let event { items.append("event=\(event)") }
+        let extra = items.joined(separator: "&")
+        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             throw URLError(.badURL)
         }
-        var request = URLRequest(url: requestURL)
-        request.timeoutInterval = 20
-        let (data, _) = try await URLSession.shared.data(for: request)
+        if let existing = components.percentEncodedQuery, !existing.isEmpty {
+            components.percentEncodedQuery = existing + "&" + extra
+        } else {
+            components.percentEncodedQuery = extra
+        }
+        guard let requestURL = components.url else {
+            throw URLError(.badURL)
+        }
+        let data = try await HTTPClient.get(requestURL)
 
         // Normal: bencoded Dict. Fallback: HTTP-Text ("flood", "No peers", peer-Liste).
         if let root = try? BB.decodeTolerant(data), let dict = root as? [String: Any] {
@@ -79,7 +93,7 @@ public struct TrackerClient {
         if text.lowercased().contains("no peers") {
             return Result(peers: [], interval: 300, failureReason: nil)
         }
-        return Result(peers: [], interval: 120, failureReason: "ungültige Antwort (\(text.prefix(60)))")
+        return Result(peers: [], interval: 120, failureReason: String(localized: "ungültige Antwort (\(text.prefix(60)))", bundle: .main))
     }
 
     private static func parseCompactString(_ s: String) -> PeerAddress? {
@@ -88,11 +102,16 @@ public struct TrackerClient {
         return PeerAddress(ip: String(parts[0]), port: port)
     }
 
-    /// Percent-Encoding nach RFC 3986 (nur unreservierte Zeichen bleiben).
+    /// Percent-Encoding nach RFC 3986. Nur ASCII-Unreserved bleibt roh.
+    /// `Character.isLetter` wäre hier falsch: Byte 0xF6 ist „ö“ und würde den Info-Hash zerstören.
     private static func percentEncodeRaw(_ data: Data) -> String {
         data.map { byte in
-            let c = Character(UnicodeScalar(byte))
-            return (c.isLetter || c.isNumber || "-._~".contains(c)) ? String(c) : String(format: "%%%02X", byte)
+            switch byte {
+            case 0x30...0x39, 0x41...0x5A, 0x61...0x7A, 0x2D, 0x2E, 0x5F, 0x7E:
+                return String(UnicodeScalar(byte))
+            default:
+                return String(format: "%%%02X", byte)
+            }
         }.joined()
     }
 }

@@ -1,0 +1,2547 @@
+{
+  "sourceLanguage": "de",
+  "strings": {
+    "%1$@ · %2$@ von %3$@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@ of %3$@"
+          }
+        }
+      }
+    },
+    "%1$@ – %2$@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ – %2$@"
+          }
+        }
+      }
+    },
+    "%1$lld von %2$lld gewählt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld selected"
+          }
+        }
+      }
+    },
+    "%@ (nicht verbunden)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (not connected)"
+          }
+        }
+      }
+    },
+    "%@ getrennt – gestoppt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ disconnected – stopped"
+          }
+        }
+      }
+    },
+    "%lld Peers": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld peers"
+          }
+        }
+      }
+    },
+    "Abbrechen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Aktiv · Intervall %lld s": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active · interval %lld s"
+          }
+        }
+      }
+    },
+    "Aktive Downloads beim Start fortsetzen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume active downloads at launch"
+          }
+        }
+      }
+    },
+    "Alle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "Alle Verbindungen (kein Schutz)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All connections (no protection)"
+          }
+        }
+      }
+    },
+    "Alle Verbindungen laufen ausschließlich über %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All connections go exclusively through %@."
+          }
+        }
+      }
+    },
+    "Alle fortsetzen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume All"
+          }
+        }
+      }
+    },
+    "Alle fortsetzen (⌥⌘R)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume all (⌥⌘R)"
+          }
+        }
+      }
+    },
+    "Alle pausieren": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause All"
+          }
+        }
+      }
+    },
+    "Alle pausieren (⌥⌘P)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause all (⌥⌘P)"
+          }
+        }
+      }
+    },
+    "Allgemein": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        }
+      }
+    },
+    "Announce %@ event=%@ left=%lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Announce %@ event=%@ left=%lld"
+          }
+        }
+      }
+    },
+    "Anonymer Modus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anonymous mode"
+          }
+        }
+      }
+    },
+    "Antwort zu groß": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Response too large"
+          }
+        }
+      }
+    },
+    "Anzahl aktiver Downloads am Dock-Symbol": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show number of active downloads on the Dock icon"
+          }
+        }
+      }
+    },
+    "Aufsteigend": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ascending"
+          }
+        }
+      }
+    },
+    "Aus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "Ausgehend": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outgoing"
+          }
+        }
+      }
+    },
+    "Ausgewählt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected"
+          }
+        }
+      }
+    },
+    "Automatische Freigabe: inaktiv": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic port forwarding: inactive"
+          }
+        }
+      }
+    },
+    "Automatische Freigabe: inaktiv (aus, anonymer Modus oder VPN-Schnittstelle)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic port forwarding: inactive (off, anonymous mode or VPN interface)"
+          }
+        }
+      }
+    },
+    "Automatische Freigabe: wartet auf einen laufenden Torrent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic port forwarding: waiting for a running torrent"
+          }
+        }
+      }
+    },
+    "Benachrichtigung, wenn ein Download fertig ist": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notify when a download finishes"
+          }
+        }
+      }
+    },
+    "Bereit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready"
+          }
+        }
+      }
+    },
+    "DHT aus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHT off"
+          }
+        }
+      }
+    },
+    "DHT nutzen (Peers ohne Tracker finden)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use DHT (find peers without a tracker)"
+          }
+        }
+      }
+    },
+    "DHT-Peers": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHT peers"
+          }
+        }
+      }
+    },
+    "DHT: %lld Knoten": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHT: %lld nodes"
+          }
+        }
+      }
+    },
+    "DHT: %lld neue Peers (%lld gesamt)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHT: %lld new peers (%lld total)"
+          }
+        }
+      }
+    },
+    "DHT: Suche (%lld Knoten)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHT: searching (%lld nodes)"
+          }
+        }
+      }
+    },
+    "Dateianlage fehlgeschlagen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not create files"
+          }
+        }
+      }
+    },
+    "Dateien": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Files"
+          }
+        }
+      }
+    },
+    "Dateien in den Papierkorb": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Files to Trash"
+          }
+        }
+      }
+    },
+    "Dateien konnten nicht angelegt werden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Files could not be created"
+          }
+        }
+      }
+    },
+    "Dateien wählen…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Files…"
+          }
+        }
+      }
+    },
+    "Deine IP ist für Peers sichtbar. Unter Einstellungen → Privatsphäre kannst du eine VPN-Schnittstelle erzwingen.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your IP address is visible to peers. Under Settings → Privacy you can force a VPN interface."
+          }
+        }
+      }
+    },
+    "Der Peer sperrt uns (Choke)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The peer is choking us"
+          }
+        }
+      }
+    },
+    "Der Peer will Daten von uns": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The peer wants data from us"
+          }
+        }
+      }
+    },
+    "Details": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        }
+      }
+    },
+    "Details ein-/ausblenden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show or hide details"
+          }
+        }
+      }
+    },
+    "Die erzwungene Schnittstelle ist nicht verbunden; es wird nichts gesendet.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The required interface is not connected; nothing is being sent."
+          }
+        }
+      }
+    },
+    "Die heruntergeladenen Dateien können in den Papierkorb gelegt werden.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The downloaded files can be moved to the Trash."
+          }
+        }
+      }
+    },
+    "Dieser Ordner ist zu umfassend": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This folder is too broad"
+          }
+        }
+      }
+    },
+    "Download": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download"
+          }
+        }
+      }
+    },
+    "Download fertig": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download finished"
+          }
+        }
+      }
+    },
+    "Download fertig.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download finished."
+          }
+        }
+      }
+    },
+    "Download-Limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download limit"
+          }
+        }
+      }
+    },
+    "Downloads": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads"
+          }
+        }
+      }
+    },
+    "Eingehend": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incoming"
+          }
+        }
+      }
+    },
+    "Einstellungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "Einstellungen (⌘,)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings (⌘,)"
+          }
+        }
+      }
+    },
+    "Entfernen…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove…"
+          }
+        }
+      }
+    },
+    "Erneut prüfen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re-check"
+          }
+        }
+      }
+    },
+    "Erstellt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Created"
+          }
+        }
+      }
+    },
+    "Fehler": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        }
+      }
+    },
+    "Fenster öffnen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Window"
+          }
+        }
+      }
+    },
+    "Fertig": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "File ist kein gültiges .torrent (bencode)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "File is not a valid .torrent (bencode)"
+          }
+        }
+      }
+    },
+    "Format nicht unterstützt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Format not supported"
+          }
+        }
+      }
+    },
+    "Fortschritt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress"
+          }
+        }
+      }
+    },
+    "Fortsetzen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
+    "Frame zu groß: %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frame too large: %lld"
+          }
+        }
+      }
+    },
+    "Freigabe für Port %lld wird eingerichtet…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setting up forwarding for port %lld…"
+          }
+        }
+      }
+    },
+    "Geladen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloaded"
+          }
+        }
+      }
+    },
+    "Geschwindigkeit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        }
+      }
+    },
+    "Größe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Size"
+          }
+        }
+      }
+    },
+    "Handshake ungültig": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid handshake"
+          }
+        }
+      }
+    },
+    "Hinweis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notice"
+          }
+        }
+      }
+    },
+    "Hinzufügen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        }
+      }
+    },
+    "Hinzugefügt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date added"
+          }
+        }
+      }
+    },
+    "Hochgeladen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uploaded"
+          }
+        }
+      }
+    },
+    "Im Finder zeigen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in Finder"
+          }
+        }
+      }
+    },
+    "In %@ gibt es schon einen Ordner mit diesem Namen. Vorhandene Dateien, die zum Torrent passen, würden überschrieben.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There is already a folder with this name in %@. Existing files that match the torrent would be overwritten."
+          }
+        }
+      }
+    },
+    "In den Einstellungen unter Netzwerk einschalten": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on under Settings → Network"
+          }
+        }
+      }
+    },
+    "Info-Hash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info hash"
+          }
+        }
+      }
+    },
+    "Info-Hash %@ · Peer-ID %@ · Port %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info hash %@ · peer ID %@ · port %lld"
+          }
+        }
+      }
+    },
+    "Info-Hash kopieren": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy Info Hash"
+          }
+        }
+      }
+    },
+    "InfoHash stimmt nicht": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info hash does not match"
+          }
+        }
+      }
+    },
+    "Ja": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes"
+          }
+        }
+      }
+    },
+    "KB/s  (0 = unbegrenzt)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KB/s  (0 = unlimited)"
+          }
+        }
+      }
+    },
+    "Kein Torrent gewählt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No torrent selected"
+          }
+        }
+      }
+    },
+    "Kein VPN-Schutz": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No VPN protection"
+          }
+        }
+      }
+    },
+    "Kein Zugriff auf %@. Wähle den Ordner oder einen übergeordneten Ordner.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No access to %@. Choose the folder or a parent folder."
+          }
+        }
+      }
+    },
+    "Kein freier Port – nur ausgehende Verbindungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No free port – outgoing connections only"
+          }
+        }
+      }
+    },
+    "Keine": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        }
+      }
+    },
+    "Keine Metadaten gefunden (keine erreichbaren Peers)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No metadata found (no reachable peers)"
+          }
+        }
+      }
+    },
+    "Keine Torrents in „%@“": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No torrents in “%@”"
+          }
+        }
+      }
+    },
+    "Keine Tracker": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No trackers"
+          }
+        }
+      }
+    },
+    "Keine Tracker-URL in der Torrent-Datei": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tracker URL in the torrent file"
+          }
+        }
+      }
+    },
+    "Keine Treffer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results"
+          }
+        }
+      }
+    },
+    "Keine Verbindungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No connections"
+          }
+        }
+      }
+    },
+    "Keine automatische Freigabe möglich – Port %lld ggf. im Router weiterleiten": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic forwarding not possible – forward port %lld in your router if needed"
+          }
+        }
+      }
+    },
+    "Keine verbundenen Peers, nächster Announce in 10s": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No connected peers, next announce in 10 s"
+          }
+        }
+      }
+    },
+    "Links und Dateien hinzufügen (⌘N)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add links and files (⌘N)"
+          }
+        }
+      }
+    },
+    "Liste sortieren": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort the list"
+          }
+        }
+      }
+    },
+    "Listener auf Port %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening on port %lld"
+          }
+        }
+      }
+    },
+    "Log": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log"
+          }
+        }
+      }
+    },
+    "Lädt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading"
+          }
+        }
+      }
+    },
+    "MacTorrent beenden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit MacTorrent"
+          }
+        }
+      }
+    },
+    "MacTorrent verbindet sich mit Peers im lokalen Netzwerk, um Dateien auszutauschen.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacTorrent connects to peers on the local network to exchange files."
+          }
+        }
+      }
+    },
+    "Magnet-Links oder .torrent-Adressen – ein Eintrag pro Zeile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magnet links or .torrent URLs – one per line"
+          }
+        }
+      }
+    },
+    "Max. Peers pro Torrent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Max. peers per torrent"
+          }
+        }
+      }
+    },
+    "Metadaten passen nicht zum Info-Hash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metadata does not match the info hash"
+          }
+        }
+      }
+    },
+    "Mit Unfertig-Ordner lädt ein Torrent dort und wird nach dem Download in den Speicherort verschoben. Gilt für neu hinzugefügte Torrents.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With an incomplete folder, a torrent downloads there and is moved to the download location when finished. Applies to newly added torrents."
+          }
+        }
+      }
+    },
+    "Mitteilungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
+          }
+        }
+      }
+    },
+    "Möglichst wenig über mich preisgeben": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reveal as little about me as possible"
+          }
+        }
+      }
+    },
+    "Name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Nein": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No"
+          }
+        }
+      }
+    },
+    "Netzwerk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network"
+          }
+        }
+      }
+    },
+    "Neuen Ordner anlegen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create New Folder"
+          }
+        }
+      }
+    },
+    "Nicht erkannt: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not recognized: %@"
+          }
+        }
+      }
+    },
+    "Noch keine Meldungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No messages yet"
+          }
+        }
+      }
+    },
+    "Noch keine Torrents": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No torrents yet"
+          }
+        }
+      }
+    },
+    "Noch nicht gewählt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not chosen yet"
+          }
+        }
+      }
+    },
+    "Nur aus Liste": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from List Only"
+          }
+        }
+      }
+    },
+    "Nur über %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only via %@"
+          }
+        }
+      }
+    },
+    "Nur über Schnittstelle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only via interface"
+          }
+        }
+      }
+    },
+    "OK": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Oder .torrent-Dateien hierher ziehen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Or drag .torrent files here"
+          }
+        }
+      }
+    },
+    "Ohne freigegebenen Ordner kann MacTorrent nichts speichern. Wähle einen unter Einstellungen → Allgemein.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without an approved folder MacTorrent cannot save anything. Choose one under Settings → General."
+          }
+        }
+      }
+    },
+    "Ordner für Downloads freigeben": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grant access to the downloads folder"
+          }
+        }
+      }
+    },
+    "Ordner für diese Downloads freigeben": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grant access to the folder for these downloads"
+          }
+        }
+      }
+    },
+    "Ordner für unfertige Downloads freigeben": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grant access to the folder for incomplete downloads"
+          }
+        }
+      }
+    },
+    "Ort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location"
+          }
+        }
+      }
+    },
+    "Pausieren": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "Pausiert": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused"
+          }
+        }
+      }
+    },
+    "Peer %@: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: %@"
+          }
+        }
+      }
+    },
+    "Peer %@: Block verworfen piece %lld offset %lld len %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: block discarded piece %lld offset %lld len %lld"
+          }
+        }
+      }
+    },
+    "Peer %@: Handshake OK (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: handshake OK (%@)"
+          }
+        }
+      }
+    },
+    "Peer %@: eingehend": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: incoming"
+          }
+        }
+      }
+    },
+    "Peer %@: erster Block (Piece %lld)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: first block (piece %lld)"
+          }
+        }
+      }
+    },
+    "Peer %@: getrennt.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: disconnected."
+          }
+        }
+      }
+    },
+    "Peer %@: keine Pieces gemeldet, trenne": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: reported no pieces, disconnecting"
+          }
+        }
+      }
+    },
+    "Peer %@: verbinde…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer %@: connecting…"
+          }
+        }
+      }
+    },
+    "Peer hat den Stream geschlossen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer closed the stream"
+          }
+        }
+      }
+    },
+    "Peer hat die Verbindung geschlossen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer closed the connection"
+          }
+        }
+      }
+    },
+    "Peer nicht verbunden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer not connected"
+          }
+        }
+      }
+    },
+    "Peer-Verbindung verloren: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peer connection lost: %@"
+          }
+        }
+      }
+    },
+    "Peers": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peers"
+          }
+        }
+      }
+    },
+    "Peers, Tracker und DHT laufen dann ausschließlich über diese Schnittstelle, zum Beispiel dein VPN (utun…). Ist sie nicht verbunden, sendet die App nichts und pausiert alle Torrents.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peers, trackers and DHT then use this interface exclusively, for example your VPN (utun…). If it is not connected, the app sends nothing and pauses all torrents."
+          }
+        }
+      }
+    },
+    "Pieces": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pieces"
+          }
+        }
+      }
+    },
+    "Port %1$lld offen via %2$@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port %1$lld open via %2$@"
+          }
+        }
+      }
+    },
+    "Port %1$lld offen via %2$@ · externe IP %3$@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port %1$lld open via %2$@ · external IP %3$@"
+          }
+        }
+      }
+    },
+    "Port %lld ist belegt – keine eingehenden Verbindungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port %lld is in use – no incoming connections"
+          }
+        }
+      }
+    },
+    "Port automatisch am Router freigeben (UPnP/NAT-PMP)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forward port automatically on the router (UPnP/NAT-PMP)"
+          }
+        }
+      }
+    },
+    "Port für eingehende Verbindungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port for incoming connections"
+          }
+        }
+      }
+    },
+    "Port offen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port open"
+          }
+        }
+      }
+    },
+    "Privat": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Private"
+          }
+        }
+      }
+    },
+    "Private Torrents verwenden nie DHT oder fremde Tracker. DHT-Änderungen gelten für neu gestartete Torrents.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Private torrents never use DHT or foreign trackers. DHT changes apply to newly started torrents."
+          }
+        }
+      }
+    },
+    "Privatsphäre": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy"
+          }
+        }
+      }
+    },
+    "Prüft…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking…"
+          }
+        }
+      }
+    },
+    "Re-Check: %lld/%lld gültig.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re-check: %lld/%lld valid."
+          }
+        }
+      }
+    },
+    "Re-Check: alle Pieces werden neu validiert…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re-check: validating all pieces again…"
+          }
+        }
+      }
+    },
+    "Restzeit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time left"
+          }
+        }
+      }
+    },
+    "Scan: %lld/%lld Pieces gültig.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan: %lld/%lld pieces valid."
+          }
+        }
+      }
+    },
+    "Scan: vorhandene Pieces werden geprüft…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan: checking existing pieces…"
+          }
+        }
+      }
+    },
+    "Schema %@ nicht unterstützt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scheme %@ not supported"
+          }
+        }
+      }
+    },
+    "Seedet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seeding"
+          }
+        }
+      }
+    },
+    "Seeding beenden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop seeding"
+          }
+        }
+      }
+    },
+    "Seeding starten": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start seeding"
+          }
+        }
+      }
+    },
+    "Sendfehler (%@): %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send error (%@): %@"
+          }
+        }
+      }
+    },
+    "Sicherheit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Security"
+          }
+        }
+      }
+    },
+    "Sortieren": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort"
+          }
+        }
+      }
+    },
+    "Sortieren nach": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort by"
+          }
+        }
+      }
+    },
+    "Speichern in": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save to"
+          }
+        }
+      }
+    },
+    "Speicherort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download location"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default"
+          }
+        }
+      }
+    },
+    "Standardmäßig blockiert: Ein fremder Torrent könnte sonst über seine Tracker-Adresse Anfragen an deinen Router oder andere Geräte im Heimnetz schicken.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blocked by default: otherwise a foreign torrent could use its tracker address to send requests to your router or other devices on your home network."
+          }
+        }
+      }
+    },
+    "Stückweises Hash (20 Bytes) fehlt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piece hashes (20 bytes each) missing"
+          }
+        }
+      }
+    },
+    "Suchen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
+          }
+        }
+      }
+    },
+    "Symbol mit Geschwindigkeit in der Menüleiste": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show icon with speed in the menu bar"
+          }
+        }
+      }
+    },
+    "TCP, gilt für alle Torrents. Klappt die automatische Freigabe nicht, leite den Port im Router selbst an diesen Mac weiter. Im anonymen Modus und bei erzwungener VPN-Schnittstelle bleibt der Port geschlossen.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TCP, applies to all torrents. If automatic forwarding does not work, forward the port to this Mac in your router yourself. In anonymous mode and with a forced VPN interface the port stays closed."
+          }
+        }
+      }
+    },
+    "Torrent enthält unsichere Dateipfade (z. B. „..“) und wurde abgelehnt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent contains unsafe file paths (e.g. “..”) and was rejected"
+          }
+        }
+      }
+    },
+    "Torrent läuft bereits": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent is already running"
+          }
+        }
+      }
+    },
+    "Torrent läuft nicht": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent is not running"
+          }
+        }
+      }
+    },
+    "Torrent-Dateien öffnen…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Torrent Files…"
+          }
+        }
+      }
+    },
+    "Torrentdateien auswählen (.torrent)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose torrent files (.torrent)"
+          }
+        }
+      }
+    },
+    "Torrents": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrents"
+          }
+        }
+      }
+    },
+    "Torrents hinzufügen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Torrents"
+          }
+        }
+      }
+    },
+    "Torrents hinzufügen…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Torrents…"
+          }
+        }
+      }
+    },
+    "Tracker": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackers"
+          }
+        }
+      }
+    },
+    "Tracker %@: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker %@: %@"
+          }
+        }
+      }
+    },
+    "Tracker %@: %lld Peers, Intervall %llds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker %@: %lld peers, interval %llds"
+          }
+        }
+      }
+    },
+    "Tracker %@: Schema %@ nicht unterstützt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker %@: scheme %@ not supported"
+          }
+        }
+      }
+    },
+    "Tracker im lokalen Netz blockiert (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker on the local network blocked (%@)"
+          }
+        }
+      }
+    },
+    "Tracker im lokalen Netz erlauben": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow trackers on the local network"
+          }
+        }
+      }
+    },
+    "Tracker-URL %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker URL %@"
+          }
+        }
+      }
+    },
+    "Unfertige Downloads": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incomplete downloads"
+          }
+        }
+      }
+    },
+    "Ungültige Antwort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid response"
+          }
+        }
+      }
+    },
+    "Upload": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upload"
+          }
+        }
+      }
+    },
+    "Upload-Limit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upload limit"
+          }
+        }
+      }
+    },
+    "VPN-Schutz (Kill-Switch)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VPN protection (kill switch)"
+          }
+        }
+      }
+    },
+    "VPN-Schutz: Schnittstelle nicht verbunden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VPN protection: interface not connected"
+          }
+        }
+      }
+    },
+    "VPN-Schutz: „%@“ ist nicht verbunden. Es wird nichts gesendet.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VPN protection: “%@” is not connected. Nothing is being sent."
+          }
+        }
+      }
+    },
+    "Verbindungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connections"
+          }
+        }
+      }
+    },
+    "Verhältnis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ratio"
+          }
+        }
+      }
+    },
+    "Verifizierte DHT-Knoten. Ab ca. 50 läuft die Peer-Suche ohne Tracker zuverlässig.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verified DHT nodes. From about 50 on, peer discovery without a tracker works reliably."
+          }
+        }
+      }
+    },
+    "Verschieben nach %@ fehlgeschlagen – Dateien bleiben in %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moving to %@ failed – files stay in %@"
+          }
+        }
+      }
+    },
+    "Verschoben nach %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moved to %@"
+          }
+        }
+      }
+    },
+    "Vorhandenen verwenden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Existing"
+          }
+        }
+      }
+    },
+    "Weiterleitung ins lokale Netz abgelehnt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redirect to the local network rejected"
+          }
+        }
+      }
+    },
+    "Weiterleitung von https auf http abgelehnt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redirect from https to http rejected"
+          }
+        }
+      }
+    },
+    "Wichtig: BitTorrent zeigt jedem Peer im Schwarm deine IP-Adresse. Das kann keine App ändern. Echten Schutz bietet nur ein VPN – der Kill-Switch oben stellt sicher, dass die App ohne VPN gar nicht sendet.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Important: BitTorrent shows every peer in the swarm your IP address. No app can change that. Only a VPN gives real protection – the kill switch above makes sure the app sends nothing without the VPN."
+          }
+        }
+      }
+    },
+    "Wir geben diesem Peer Upload frei": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We are uploading to this peer"
+          }
+        }
+      }
+    },
+    "Wähle den Ordner, in dem MacTorrent Downloads speichern darf.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the folder where MacTorrent may save downloads."
+          }
+        }
+      }
+    },
+    "Wähle einen Unterordner, zum Beispiel „Downloads“, nicht den gesamten Home-Ordner.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a subfolder, for example “Downloads”, not your entire home folder."
+          }
+        }
+      }
+    },
+    "Wählen…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose…"
+          }
+        }
+      }
+    },
+    "Ziehe .torrent-Dateien in das Fenster, füge Magnet-Links mit ⌘V ein oder nutze „Hinzufügen“.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag .torrent files into the window, paste magnet links with ⌘V, or use “Add”."
+          }
+        }
+      }
+    },
+    "Zu viele Weiterleitungen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too many redirects"
+          }
+        }
+      }
+    },
+    "Zufällig": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Random"
+          }
+        }
+      }
+    },
+    "Zufällige Peer-ID ohne Client-Kürzel · keine eingehenden Verbindungen (kein offener Port) · kein Eintrag im DHT · keine öffentlichen Zusatz-Tracker · Tracker erfahren keine Transfer-Zahlen · kein User-Agent. Gilt für neu gestartete Torrents. Seeding ist so nur eingeschränkt möglich.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Random peer ID without a client tag · no incoming connections (no open port) · no DHT announce · no public extra trackers · trackers learn no transfer numbers · no User-Agent. Applies to newly started torrents. Seeding is only possible to a limited extent."
+          }
+        }
+      }
+    },
+    "Zugriff auf den Ordner von „%@“ erlauben.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow access to the folder of “%@”."
+          }
+        }
+      }
+    },
+    "Zugriff erlauben": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Access"
+          }
+        }
+      }
+    },
+    "Zusätzliche öffentliche Tracker nutzen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use additional public trackers"
+          }
+        }
+      }
+    },
+    "info-Dictionary fehlt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "info dictionary missing"
+          }
+        }
+      }
+    },
+    "ungültige Antwort (%@)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid response (%@)"
+          }
+        }
+      }
+    },
+    "ungültiger Port": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "invalid port"
+          }
+        }
+      }
+    },
+    "wie Speicherort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "same as download location"
+          }
+        }
+      }
+    },
+    "Ändern…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change…"
+          }
+        }
+      }
+    },
+    "Übersicht": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
+          }
+        }
+      }
+    },
+    "„%@“ entfernen?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove “%@”?"
+          }
+        }
+      }
+    },
+    "„%@“ existiert bereits": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” already exists"
+          }
+        }
+      }
+    },
+    "„%@“ ist bereits in der Liste.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is already in the list."
+          }
+        }
+      }
+    },
+    "↓ %1$@    ↑ %2$@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "↓ %1$@    ↑ %2$@"
+          }
+        }
+      }
+    },
+    "↓%1$@ ↑%2$@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "↓%1$@ ↑%2$@"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

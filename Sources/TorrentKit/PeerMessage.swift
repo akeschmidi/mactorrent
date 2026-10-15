@@ -21,13 +21,13 @@ public enum PeerMessage {
 extension PeerMessage {
     /// Dekodiert ein Frame-Payload ([1 Byte Type][…]).
     static func parse(_ payload: Data) -> PeerMessage {
-        guard let type = payload.first else { return .unknown }
+        guard let type = payload.first else { return .keepAlive }
         let body = payload.dropFirst()
         switch type {
-        case 0: return .keepAlive
-        case 1: return .choke
-        case 2: return .unchoke
-        case 3: return .interested
+        case 0: return .choke
+        case 1: return .unchoke
+        case 2: return .interested
+        case 3: return .notInterested
         case 4: return body.count >= 4 ? .have(piece: be32(body.prefix(4))) : .unknown
         case 5: return .bitfield(Data(body))
         case 7:

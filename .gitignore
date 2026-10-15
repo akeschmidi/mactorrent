@@ -6,3 +6,4 @@ build/
 .swiftpm/
 *.o
 *.dSYM
+brain/
