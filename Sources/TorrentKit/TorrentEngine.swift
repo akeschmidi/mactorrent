@@ -81,7 +81,7 @@ public final class TorrentEngine: ObservableObject {
         await enqueue { [core] in await core.start() }.value
     }
 
-    /// Sofort wirksam für die UI (`isRunning`); der Kern räumt im Hintergrund auf und meldet dann `.paused`.
+    /// Sofort wirksam für die UI (`isRunning`); der Kern räumt im Hintergrund auf und meldet dann `.paused` (fertig: `.done`).
     public func stop() {
         isRunning = false
         enqueue { [core] in await core.stop() }

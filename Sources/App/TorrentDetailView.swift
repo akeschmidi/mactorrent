@@ -20,6 +20,7 @@ struct TorrentDetailView: View {
             }
             .pickerStyle(.segmented)
             .labelsHidden()
+            .controlSize(.small)
             .padding(10)
             Divider()
             switch tab {
@@ -39,7 +40,7 @@ struct TorrentDetailView: View {
         let t = item.torrent
         return ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                Text(item.name).font(.headline).textSelection(.enabled)
+                Text(item.name).font(.headline).textSelection(.enabled).detailWidth()
                 PieceMap(engine: engine)
                 Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: 12, verticalSpacing: 6) {
                     row("Fortschritt", Fmt.percent(p.fraction))
@@ -70,7 +71,7 @@ struct TorrentDetailView: View {
     private func row(_ label: LocalizedStringKey, _ value: String) -> some View {
         GridRow {
             Text(label).foregroundStyle(.secondary).gridColumnAlignment(.trailing)
-            Text(value).textSelection(.enabled).monospacedDigit().lineLimit(2).truncationMode(.middle)
+            Text(value).textSelection(.enabled).monospacedDigit().lineLimit(2).truncationMode(.middle).detailWidth()
         }
     }
 
@@ -203,16 +204,23 @@ struct TorrentDetailView: View {
                     if engine.logs.isEmpty {
                         Text("Noch keine Meldungen").foregroundStyle(.tertiary)
                     } else {
-                        Text(engine.logs.joined(separator: "\n")).textSelection(.enabled)
+                        Text(engine.logs.joined(separator: "\n")).textSelection(.enabled).detailWidth()
                     }
                     Color.clear.frame(height: 1).id("end")
                 }
                 .font(.system(size: 11, design: .monospaced))
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(10)
             }
-            .onChange(of: engine.logs.count) { _, _ in proxy.scrollTo("end", anchor: .bottom) }
+            // scrollTo im selben Lauf wie das Layout lässt AppKit die Constraint-Pässe überziehen.
+            .onChange(of: engine.logs.count) { _, _ in DispatchQueue.main.async { proxy.scrollTo("end", anchor: .bottom) } }
         }
+    }
+}
+
+private extension View {
+    /// Markierbarer Text meldet sonst die volle Zeilenbreite; die Split-View legt die Constraint dann in jedem Pass neu an.
+    func detailWidth() -> some View {
+        frame(maxWidth: .infinity, alignment: .leading).fixedSize(horizontal: false, vertical: true)
     }
 }
 

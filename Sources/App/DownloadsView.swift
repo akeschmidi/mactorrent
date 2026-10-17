@@ -35,7 +35,7 @@ struct DownloadsView: View {
     @State private var filter: Filter? = .all
     @State private var selection = Set<UUID>()
     @State private var search = ""
-    @State private var showInspector = true
+    @State private var showInspector = false
     @State private var dropTargeted = false
     @AppStorage("sortKey") private var sortKey = SortKey.added.rawValue
     @AppStorage("sortAscending") private var sortAscending = true
@@ -71,16 +71,7 @@ struct DownloadsView: View {
             content
         }
         .searchable(text: $search, placement: .sidebar, prompt: "Suchen")
-        .inspector(isPresented: $showInspector) {
-            Group {
-                if let item = selectedItem {
-                    TorrentDetailView(model: model, item: item, engine: item.engine).id(item.id)
-                } else {
-                    ContentUnavailableView("Kein Torrent gewählt", systemImage: "sidebar.right")
-                }
-            }
-            .inspectorColumnWidth(min: 260, ideal: 300, max: 520)
-        }
+        .onChange(of: selection) { _, new in if !new.isEmpty { showInspector = true } } // Details erscheinen erst bei Auswahl
         .dropDestination(for: URL.self) { urls, _ in
             model.add(urls: urls.filter { $0.pathExtension.lowercased() == "torrent" })
             return true
@@ -95,7 +86,13 @@ struct DownloadsView: View {
             }
         }
         // Erster Start: gleich fragen, in welchen Ordner die App schreiben darf.
-        .onAppear { DispatchQueue.main.async { model.ensureBaseDir() } }
+        .onAppear {
+            #if DEBUG
+            if CommandLine.arguments.contains("--demo-select"), let first = model.items.first { selection = [first.id] }
+            if DebugSnapshot.requested { return } // kein Ordner-Dialog beim Schnappschuss
+            #endif
+            DispatchQueue.main.async { model.ensureBaseDir() }
+        }
         .sheet(isPresented: $model.showAddSheet) { AddTorrentsSheet(model: model) }
         // ⌘V: Links oder Dateien aus der Zwischenablage direkt hinzufügen.
         .onPasteCommand(of: [.fileURL, .plainText]) { providers in
@@ -125,57 +122,100 @@ struct DownloadsView: View {
                 .badge(model.items.filter { f.matches($0.engine.state) }.count)
                 .tag(f)
         }
-        .safeAreaInset(edge: .bottom) {
-            VStack(alignment: .leading, spacing: 4) {
-                Label(Fmt.rate(model.totalDown), systemImage: "arrow.down").foregroundStyle(.green)
-                Label(Fmt.rate(model.totalUp), systemImage: "arrow.up").foregroundStyle(.blue)
-                dhtStatus
-                protectionStatus
-                if model.portStatus.contains("offen") {
-                    Label("Port offen", systemImage: "network").foregroundStyle(.green)
-                        .font(.caption).help(model.portStatus)
-                }
-            }
-            .font(.callout.monospacedDigit())
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(12)
-        }
+        .safeAreaInset(edge: .bottom) { statusPanel }
     }
 
-    private var protectionStatus: some View {
+    // MARK: Statusbereich unten links
+
+    private var statusPanel: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 16) {
+                Label(Fmt.rate(model.totalDown), systemImage: "arrow.down").foregroundStyle(.green)
+                Label(Fmt.rate(model.totalUp), systemImage: "arrow.up").foregroundStyle(.blue)
+            }
+            .font(.callout.monospacedDigit())
+            Divider()
+            VStack(alignment: .leading, spacing: 6) {
+                dhtRow
+                protectionRow
+                if UserDefaults.standard.bool(forKey: Pref.anonymousMode) {
+                    statusRow("eye.slash", .secondary, String(localized: "Anonymer Modus"))
+                }
+                if model.portStatus.contains("offen") {
+                    statusRow("network", .green, String(localized: "Port offen")).help(model.portStatus)
+                }
+            }
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        // Idealbreite der Statuszeilen darf die Spalten-Obergrenze nicht überstimmen.
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    /// Eine Statuszeile: Symbol in fester Breite, damit alle Texte untereinander bündig stehen.
+    private func statusRow(_ icon: String, _ color: Color, _ text: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: icon).foregroundStyle(color).frame(width: 16)
+            Text(text).lineLimit(1).truncationMode(.middle)
+        }
+        .font(.caption)
+        .foregroundStyle(.secondary)
+    }
+
+    private var protectionRow: some View {
         let (icon, color, text, help): (String, Color, String, String)
         switch model.protection {
         case .none: (icon, color, text, help) = ("shield.slash", .gray, String(localized: "Kein VPN-Schutz"), String(localized: "Deine IP ist für Peers sichtbar. Unter Einstellungen → Privatsphäre kannst du eine VPN-Schnittstelle erzwingen."))
         case .bound(let n): (icon, color, text, help) = ("lock.shield.fill", .green, String(localized: "Nur über \(n)"), String(localized: "Alle Verbindungen laufen ausschließlich über \(n)."))
         case .blocked(let n): (icon, color, text, help) = ("exclamationmark.shield.fill", .red, String(localized: "\(n) getrennt – gestoppt"), String(localized: "Die erzwungene Schnittstelle ist nicht verbunden; es wird nichts gesendet."))
         }
-        return VStack(alignment: .leading, spacing: 2) {
-            Label(text, systemImage: icon).foregroundStyle(color)
-            if UserDefaults.standard.bool(forKey: Pref.anonymousMode) {
-                Label("Anonymer Modus", systemImage: "eye.slash").foregroundStyle(.secondary)
-            }
-        }
-        .help(help)
+        return statusRow(icon, color, text).help(help)
     }
 
-    private var dhtStatus: some View {
+    private var dhtRow: some View {
         let on = UserDefaults.standard.bool(forKey: Pref.dhtEnabled)
         let color: Color = !on ? .gray : model.dhtNodes >= 50 ? .green : .orange
-        return HStack(spacing: 6) {
-            Circle().fill(color).frame(width: 8, height: 8)
-            Text(on ? "DHT: \(model.dhtNodes) Knoten" : "DHT aus")
-        }
-        .foregroundStyle(.secondary)
-        .help(on ? "Verifizierte DHT-Knoten. Ab ca. 50 läuft die Peer-Suche ohne Tracker zuverlässig." : "In den Einstellungen unter Netzwerk einschalten")
+        let text = on ? String(localized: "DHT: \(model.dhtNodes) Knoten") : String(localized: "DHT aus")
+        let help = on ? String(localized: "Verifizierte DHT-Knoten. Ab ca. 50 läuft die Peer-Suche ohne Tracker zuverlässig.")
+                      : String(localized: "In den Einstellungen unter Netzwerk einschalten")
+        return statusRow("point.3.connected.trianglepath.dotted", color, text).help(help)
     }
 
     // MARK: Liste
 
     private var content: some View {
-        VStack(spacing: 0) {
-            topBar
-            Divider()
-            list
+        // Eigenes Seitenpanel statt `.inspector`: Der SwiftUI-Inspector vergrößert beim Öffnen das Fenster.
+        // Hier bleibt das Fenster gleich groß, die Liste wird schmaler.
+        HStack(spacing: 0) {
+            VStack(spacing: 0) {
+                topBar
+                Divider()
+                // Der leere Zustand füllt die Spalte, sonst zentriert die VStack alles und die Leiste rutscht in die Mitte.
+                list.frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .frame(minWidth: 480, maxHeight: .infinity, alignment: .top)
+            if showInspector {
+                Divider()
+                detailPanel
+                    .frame(width: Self.detailWidth)
+                    .frame(maxHeight: .infinity)
+                    .clipped()
+                    .background(.background.secondary)
+                    .transition(.identity)
+            }
+        }
+    }
+
+    /// Feste Breite des Detail-Panels (Auswahl ändert die Fenstergröße nie).
+    private static let detailWidth: CGFloat = 400
+
+    @ViewBuilder
+    private var detailPanel: some View {
+        if let item = selectedItem {
+            TorrentDetailView(model: model, item: item, engine: item.engine).id(item.id)
+        } else {
+            ContentUnavailableView("Kein Torrent gewählt", systemImage: "sidebar.right")
         }
     }
 
@@ -202,7 +242,7 @@ struct DownloadsView: View {
             } primaryAction: { ids in
                 for item in items(ids) { model.openFolder(item) }
             }
-            .onDeleteCommand { for item in items(selection) { model.confirmRemove(item) } }
+            .onDeleteCommand { model.confirmRemove(items(selection)) }
             .onKeyPress(.space) {
                 guard !selection.isEmpty else { return .ignored }
                 for item in items(selection) { model.toggle(item) }
@@ -246,7 +286,7 @@ struct DownloadsView: View {
                 NSPasteboard.general.setString(sel.map(\.torrent.infoHashHex).joined(separator: "\n"), forType: .string)
             }
             Divider()
-            Button("Entfernen…", systemImage: "trash", role: .destructive) { sel.forEach { model.confirmRemove($0) } }
+            Button("Entfernen…", systemImage: "trash", role: .destructive) { model.confirmRemove(sel) }
         }
     }
 
@@ -255,15 +295,25 @@ struct DownloadsView: View {
 
     private var topBar: some View {
         let anyRunning = model.items.contains { $0.engine.isRunning }
-        return HStack(spacing: 10) {
+        return HStack(spacing: 8) {
             Button { model.showAddSheet = true } label: { Label("Hinzufügen", systemImage: "plus") }
                 .buttonStyle(.borderedProminent)
+                .labelStyle(.titleAndIcon)
                 .help("Links und Dateien hinzufügen (⌘N)")
             Button { anyRunning ? model.pauseAll() : model.resumeAll() } label: {
                 Label(anyRunning ? "Alle pausieren" : "Alle fortsetzen", systemImage: anyRunning ? "pause.fill" : "play.fill")
             }
+            .buttonStyle(.bordered)
+            .labelStyle(.titleAndIcon)
             .help(anyRunning ? "Alle pausieren (⌥⌘P)" : "Alle fortsetzen (⌥⌘R)")
             .disabled(model.items.isEmpty)
+            Button { model.confirmRemoveCompleted() } label: {
+                Label("Fertige entfernen", systemImage: "trash")
+            }
+            .buttonStyle(.bordered)
+            .labelStyle(.titleAndIcon)
+            .help("Alle fertigen Torrents aus der Liste entfernen")
+            .disabled(!model.items.contains { $0.engine.isValid })
             Spacer()
             Menu {
                 Picker("Sortieren nach", selection: $sortKey) {
@@ -275,15 +325,22 @@ struct DownloadsView: View {
             } label: {
                 Label("Sortieren", systemImage: "arrow.up.arrow.down")
             }
+            .menuIndicator(.hidden)
+            .buttonStyle(.bordered)
+            .labelStyle(.iconOnly)
             .help("Liste sortieren")
             SettingsLink { Label("Einstellungen", systemImage: "gearshape") }
+                .buttonStyle(.bordered)
+                .labelStyle(.iconOnly)
                 .help("Einstellungen (⌘,)")
             Button { showInspector.toggle() } label: { Label("Details", systemImage: "sidebar.right") }
+                .buttonStyle(.bordered)
+                .labelStyle(.iconOnly)
                 .help("Details ein-/ausblenden")
         }
-        .controlSize(.large)
+        .controlSize(.regular)
         .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        .padding(.vertical, 7)
         .background(.bar)
     }
 
@@ -294,9 +351,11 @@ struct DownloadsView: View {
             Label("Noch keine Torrents", systemImage: "arrow.down.circle")
         } description: {
             Text("Ziehe .torrent-Dateien in das Fenster, füge Magnet-Links mit ⌘V ein oder nutze „Hinzufügen“.")
+                .frame(maxWidth: 380)
         } actions: {
             Button("Torrents hinzufügen…") { model.showAddSheet = true }
                 .buttonStyle(.borderedProminent)
         }
     }
 }
+

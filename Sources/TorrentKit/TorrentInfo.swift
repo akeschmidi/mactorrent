@@ -24,18 +24,26 @@ public struct TorrentInfo: Identifiable, Sendable {
     public let infoHash: Data
     public let infoHashHex: String
     public let pieceLength: Int
-    public let pieceHashes: [Data]
+    /// Alle Piece-Hashes hintereinander, je 20 Bytes. Ein Puffer, kein `Data` je Piece.
+    public let pieceHashes: Data
     public let entries: [TorrentEntry]
     public let totalSize: Int64
     public let trackerURLs: [URL]
     public let isPrivate: Bool
     public let created: Date?
 
-    public var numberOfPieces: Int { pieceHashes.count }
+    public var numberOfPieces: Int { pieceHashes.count / 20 }
     public var numberOfFiles: Int { entries.filter { !$0.isDirectory }.count }
 
+    /// SHA-1 von Piece `index` (20 Bytes).
+    public func pieceHash(_ index: Int) -> Data {
+        let start = index * 20
+        guard index >= 0, start + 20 <= pieceHashes.count else { return Data() }
+        return pieceHashes.subdata(in: start..<(start + 20))
+    }
+
     public init(id: UUID = UUID(), name: String, infoHash: Data, infoHashHex: String,
-                pieceLength: Int, pieceHashes: [Data], entries: [TorrentEntry],
+                pieceLength: Int, pieceHashes: Data, entries: [TorrentEntry],
                 totalSize: Int64, trackerURLs: [URL], isPrivate: Bool = false, created: Date?) {
         self.id = id
         self.name = name

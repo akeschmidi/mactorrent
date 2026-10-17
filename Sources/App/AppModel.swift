@@ -10,7 +10,8 @@ final class AppModel: ObservableObject {
         let id = UUID()
         let name: String
         let torrent: TorrentInfo
-        let torrentData: Data
+        /// Rohdatei auf der Platte. Der Inhalt bleibt nicht im RAM (Manifest liest sie beim Speichern).
+        let torrentFile: URL
         let engine: TorrentEngine
         /// Aktueller Ordner (ändert sich, wenn der Download aus „Unfertig“ verschoben wird).
         @MainActor var rootURL: URL { engine.rootURL }
@@ -48,9 +49,13 @@ final class AppModel: ObservableObject {
 
     private let manifestURL: URL
     private let stateURL: URL
+    private let torrentsDir: URL
+    /// Rohbytes, falls die .torrent-Datei nicht auf die Platte kam. Sonst leer, damit sie nicht im RAM bleiben.
+    private var unsavedTorrents: [String: Data] = [:]
     private var wasActive = Set<UUID>()
     private var activity: NSObjectProtocol?
     private var timer: Timer?
+    private var rateTimer: Timer?
 
     init() {
         Pref.registerDefaults()
@@ -62,11 +67,17 @@ final class AppModel: ObservableObject {
         try? fm.createDirectory(at: dir, withIntermediateDirectories: true)
         self.manifestURL = dir.appendingPathComponent("manifest.json")
         self.stateURL = dir.appendingPathComponent("state.json")
+        let torrents = dir.appendingPathComponent("torrents", isDirectory: true)
+        try? fm.createDirectory(at: torrents, withIntermediateDirectories: true)
+        self.torrentsDir = torrents
         self.dht = DHT(storage: dir.appendingPathComponent("dht.json"))
         NetworkPolicy.shared.onChange = { [weak self] in
             Task { @MainActor in self?.policyChanged() }
         }
         loadManifest()
+        #if DEBUG
+        if CommandLine.arguments.contains("--demo") { loadDemo() }
+        #endif
         applySettings()
         NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.applySettings() }
@@ -84,6 +95,9 @@ final class AppModel: ObservableObject {
         }
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.secondTick() }
+        }
+        rateTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated { self?.publishRates() }
         }
         if UserDefaults.standard.bool(forKey: Pref.notify) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
@@ -182,19 +196,26 @@ final class AppModel: ObservableObject {
 
     // MARK: - Sekundentakt: Summen, Dock, Fertig-Meldung, App-Nap
 
+    /// Seitenleiste und Menüleiste: dieselbe Rate wie in der Zeile, viermal pro Sekunde.
+    private func publishRates() {
+        var down: Int64 = 0, up: Int64 = 0
+        for item in items where item.engine.isRunning {
+            down += item.engine.progress.downSpeed
+            up += item.engine.progress.upSpeed
+        }
+        if down != totalDown { totalDown = down }
+        if up != totalUp { totalUp = up }
+    }
+
     private func secondTick() {
         tick += 1
-        var down: Int64 = 0, up: Int64 = 0, active = 0, seeding = 0
+        var active = 0, seeding = 0
         dhtNodes = dht.nodeCount
         let name = NetworkPolicy.shared.interfaceName
         let p: Protection = name == nil ? .none : (NetworkPolicy.shared.isBlocked ? .blocked(name!) : .bound(name!))
         if p != protection { protection = p }
         for item in items {
             let e = item.engine
-            if e.isRunning { // pausierte Torrents zählen nicht in die Summe
-                down += e.progress.downSpeed
-                up += e.progress.upSpeed
-            }
             switch e.state {
             case .downloading, .scanning:
                 active += 1
@@ -208,8 +229,6 @@ final class AppModel: ObservableObject {
             default: break
             }
         }
-        totalDown = down
-        totalUp = up
         let badge = UserDefaults.standard.bool(forKey: Pref.dockBadge) && active > 0
         NSApp?.dockTile.badgeLabel = badge ? "\(active)" : nil
         // Ohne das drosselt macOS (App Nap) Timer und Netzwerk, sobald das Fenster verdeckt ist.
@@ -402,10 +421,18 @@ final class AppModel: ObservableObject {
     }
 
     private func makeItem(info: TorrentInfo, data: Data, root: URL, final: URL?) -> Item {
+        let file = torrentsDir.appendingPathComponent(info.infoHashHex + ".torrent")
+        if FileManager.default.fileExists(atPath: file.path) {
+            unsavedTorrents[info.infoHashHex] = nil
+        } else if (try? data.write(to: file, options: .atomic)) != nil {
+            unsavedTorrents[info.infoHashHex] = nil
+        } else {
+            unsavedTorrents[info.infoHashHex] = data
+        }
         let engine = TorrentEngine(torrent: info, rootURL: root)
         engine.completedDir = final
         engine.onRelocated = { [weak self] _ in self?.saveManifest() }
-        return Item(name: info.name, torrent: info, torrentData: data, engine: engine)
+        return Item(name: info.name, torrent: info, torrentFile: file, engine: engine)
     }
 
     // MARK: - Steuerung
@@ -452,31 +479,47 @@ final class AppModel: ObservableObject {
         Task { await item.engine.recheck(); saveState() }
     }
 
-    func remove(_ item: Item, deleteFiles: Bool) {
-        item.engine.stop()
-        if deleteFiles, isOwnFolder(item.rootURL) {
-            // In den Papierkorb statt endgültig löschen.
-            try? FileManager.default.trashItem(at: item.rootURL, resultingItemURL: nil)
+    func remove(_ list: [Item], deleteFiles: Bool) {
+        guard !list.isEmpty else { return }
+        for item in list {
+            item.engine.stop()
+            if deleteFiles, isOwnFolder(item.rootURL) {
+                // In den Papierkorb statt endgültig löschen.
+                try? FileManager.default.trashItem(at: item.rootURL, resultingItemURL: nil)
+            }
+            wasActive.remove(item.id)
         }
-        items.removeAll { $0.id == item.id }
-        wasActive.remove(item.id)
+        let ids = Set(list.map(\.id))
+        items.removeAll { ids.contains($0.id) }
         saveManifest()
         saveState()
+        for item in list {
+            unsavedTorrents[item.torrent.infoHashHex] = nil
+            try? FileManager.default.removeItem(at: item.torrentFile)
+        }
     }
 
-    /// Nachfrage vor dem Entfernen (Zeilenbutton, Kontextmenü, Entf-Taste).
-    func confirmRemove(_ item: Item) {
+    /// Nachfrage vor dem Entfernen (Kontextmenü, Entf-Taste, „Fertige entfernen“). Eine Nachfrage für die ganze Auswahl.
+    func confirmRemove(_ list: [Item]) {
+        guard !list.isEmpty else { return }
         let alert = NSAlert()
-        alert.messageText = String(localized: "„\(item.name)“ entfernen?")
+        alert.messageText = list.count == 1
+            ? String(localized: "„\(list[0].name)“ entfernen?")
+            : String(localized: "\(list.count) Torrents entfernen?")
         alert.informativeText = String(localized: "Die heruntergeladenen Dateien können in den Papierkorb gelegt werden.")
         alert.addButton(withTitle: String(localized: "Nur aus Liste"))
         alert.addButton(withTitle: String(localized: "Dateien in den Papierkorb"))
         alert.addButton(withTitle: String(localized: "Abbrechen"))
         switch alert.runModal() {
-        case .alertFirstButtonReturn: remove(item, deleteFiles: false)
-        case .alertSecondButtonReturn: remove(item, deleteFiles: true)
+        case .alertFirstButtonReturn: remove(list, deleteFiles: false)
+        case .alertSecondButtonReturn: remove(list, deleteFiles: true)
         default: break
         }
+    }
+
+    /// Alle fertigen Torrents (auch pausierte Seeder) in einem Schritt aus der Liste.
+    func confirmRemoveCompleted() {
+        confirmRemove(items.filter { $0.engine.isValid })
     }
 
     func openFolder(_ item: Item) {
@@ -521,10 +564,14 @@ final class AppModel: ObservableObject {
     }
 
     private func saveManifest() {
-        let entries = items.map { ManifestEntry(name: $0.name,
-                                                 torrentB64: $0.torrentData.base64EncodedString(),
-                                                 root: $0.rootURL.path,
-                                                 final: $0.engine.completedDir?.path) }
+        let previous = (try? Data(contentsOf: manifestURL)).flatMap { try? JSONDecoder().decode([ManifestEntry].self, from: $0) } ?? []
+        let entries = items.map { item in
+            let fresh = unsavedTorrents[item.torrent.infoHashHex] ?? (try? Data(contentsOf: item.torrentFile))
+            let b64 = fresh?.base64EncodedString()
+                ?? previous.first { $0.name == item.name && $0.root == item.rootURL.path }?.torrentB64
+                ?? ""
+            return ManifestEntry(name: item.name, torrentB64: b64, root: item.rootURL.path, final: item.engine.completedDir?.path)
+        }
         if let raw = try? JSONEncoder().encode(entries) {
             try? raw.write(to: manifestURL, options: .atomic)
         }

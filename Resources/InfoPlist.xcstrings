@@ -1,22 +1,62 @@
 {
-  "sourceLanguage": "de",
-  "strings": {
-    "NSLocalNetworkUsageDescription": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MacTorrent verbindet sich mit Peers im lokalen Netzwerk, um Dateien auszutauschen."
+  "sourceLanguage" : "de",
+  "strings" : {
+    "BitTorrent File" : {
+
+    },
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "MacTorrent"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "MacTorrent"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Stefan"
+          }
+        }
+      }
+    },
+    "NSLocalNetworkUsageDescription" : {
+      "comment" : "Privacy - Local Network Usage Description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MacTorrent verbindet sich mit Peers im lokalen Netzwerk, um Dateien auszutauschen."
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MacTorrent connects to peers on the local network to exchange files."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MacTorrent connects to peers on the local network to exchange files."
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

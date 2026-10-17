@@ -7,17 +7,23 @@ struct MacTorrentApp: App {
     @StateObject private var model = AppModel()
     @AppStorage(Pref.menuBar) private var showMenuBar = true
 
+    #if DEBUG
+    /// Nur Debug: `--snapshot` rendert das Hauptfenster in `<Container>/tmp/snap.png` und beendet die App.
+    init() { DebugSnapshot.scheduleIfRequested() }
+    #endif
+
     var body: some Scene {
         // Ein einziges Fenster: Finder-Doppelklick auf .torrent landet per onOpenURL hier.
         Window("MacTorrent", id: "main") {
             DownloadsView(model: model)
-                .frame(minWidth: 1040, minHeight: 460) // schmaler: Toolbar-Buttons rutschen ins »-Menü
+                .frame(minWidth: 1100, minHeight: 480) // Seitenleiste + Liste + festes Detail-Panel
                 .onOpenURL { url in
                     // Finder-Doppelklick (Datei) oder Klick auf einen magnet:-Link im Browser
                     url.isFileURL ? model.add(urls: [url]) : model.addInput(text: url.absoluteString)
                 }
         }
         .defaultSize(width: 1100, height: 640)
+        .windowToolbarStyle(.unifiedCompact(showsTitle: false)) // schlankere Titelleiste, kein doppelter Titel
         .commands {
             CommandGroup(after: .newItem) {
                 Button("Torrents hinzufügen…") { model.showAddSheet = true }
@@ -30,6 +36,8 @@ struct MacTorrentApp: App {
                     .keyboardShortcut("r", modifiers: [.command, .option])
                 Button("Alle pausieren") { model.pauseAll() }
                     .keyboardShortcut("p", modifiers: [.command, .option])
+                Button("Fertige entfernen") { model.confirmRemoveCompleted() }
+                    .disabled(!model.items.contains { $0.engine.isValid })
             }
         }
         MenuBarExtra(isInserted: $showMenuBar) {
@@ -78,3 +86,22 @@ struct MenuBarContent: View {
         Button("MacTorrent beenden") { NSApp.terminate(nil) }
     }
 }
+
+#if DEBUG
+enum DebugSnapshot {
+    static var requested: Bool { CommandLine.arguments.contains("--snapshot") }
+
+    static func scheduleIfRequested() {
+        guard requested else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            guard let view = NSApp.windows.first(where: { $0.isVisible && $0.contentView != nil })?.contentView,
+                  let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { exit(2) }
+            view.cacheDisplay(in: view.bounds, to: rep)
+            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("snap.png")
+            try? rep.representation(using: .png, properties: [:])?.write(to: url)
+            print("SNAPSHOT", url.path, rep.pixelsWide, rep.pixelsHigh)
+            exit(0)
+        }
+    }
+}
+#endif

@@ -195,6 +195,24 @@ final class DownloadTests: XCTestCase {
         XCTAssertEqual(got.values, [16_384], engine.logs.joined(separator: "\n"))
     }
 
+    /// Neustart mit gespeichertem Bitfield darf die Datei nicht neu hashen (sonst liest ein großer Torrent alles wieder ein).
+    func testRestartDoesNotRehashMissingPieces() async throws {
+        let payload = Data((0..<20_000).map { UInt8(truncatingIfNeeded: $0 &* 3) })
+        let torrent = try Self.makeTorrent(announce: "http://127.0.0.1:1/announce", name: "resume.bin", payload: payload, pieceLength: 32_768)
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("mactorrent-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        try payload.write(to: root.appendingPathComponent("resume.bin"))
+
+        let engine = TorrentEngine(torrent: torrent, rootURL: root)
+        engine.allowPublicTrackers = false
+        engine.restoreBitfield(Data(count: (torrent.numberOfPieces + 7) / 8))
+        await engine.start()
+        defer { engine.stop() }
+        XCTAssertFalse(engine.isValid, engine.logs.joined(separator: "\n"))
+        XCTAssertNotEqual(engine.state, .done)
+    }
+
     private static func makeTorrent(announce: String, name: String, payload: Data, pieceLength: Int = 16_384) throws -> TorrentInfo {
         var hashes = Data()
         var off = 0
@@ -852,7 +870,7 @@ final class PathSafetyTests: XCTestCase {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("mt-\(UUID().uuidString)/inner")
         defer { try? FileManager.default.removeItem(at: root.deletingLastPathComponent()) }
         let t = TorrentInfo(name: "x", infoHash: Data(count: 20), infoHashHex: "", pieceLength: 16_384,
-                            pieceHashes: [Data(count: 20)],
+                            pieceHashes: Data(count: 20),
                             entries: [TorrentEntry(path: "../escaped.txt", pieceOffset: 0, length: 1)],
                             totalSize: 1, trackerURLs: [], created: nil)
         XCTAssertThrowsError(try PieceStore(torrent: t, rootURL: root).prepareFiles())

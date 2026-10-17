@@ -17,7 +17,6 @@ public struct TorrentParser {
         guard let piecesData = BB.data(info["pieces"]), piecesData.count >= 20, piecesData.count % 20 == 0 else {
             throw TorrentError.invalidPieceHash
         }
-        let pieceHashes = stride(from: 0, to: piecesData.count, by: 20).map { piecesData[$0..<$0 + 20] }
 
         // Dateien: entweder "name" + "length" (einfach) oder "files" (mehrere)
         var entries: [TorrentEntry] = []
@@ -78,7 +77,7 @@ public struct TorrentParser {
             infoHash: infoHash,
             infoHashHex: infoHashHex,
             pieceLength: pieceLen,
-            pieceHashes: pieceHashes,
+            pieceHashes: piecesData,
             entries: entries,
             totalSize: totalSize,
             trackerURLs: trackers,

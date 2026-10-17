@@ -19,6 +19,8 @@ public final class PieceStore: @unchecked Sendable {
     private var wantedValidCount = 0
     private var wantedTotalBytes: Int64
     private var wantedValidByteCount: Int64 = 0
+    /// Gespeicherter Bitfield: ein Neustart hasht die Dateien nicht noch einmal.
+    private var trustedBitfield = false
 
     public init(torrent: TorrentInfo, rootURL: URL) {
         self.torrent = torrent
@@ -139,7 +141,7 @@ public final class PieceStore: @unchecked Sendable {
         guard length > 0,
               let data = readSlice(offset: offset, length: length) else { return false }
         let hash = Data(Insecure.SHA1.hash(data: data))
-        return hash == torrent.pieceHashes[index]
+        return hash == torrent.pieceHash(index)
     }
 
     public func setValid(_ index: Int, _ value: Bool) {
@@ -190,6 +192,8 @@ public final class PieceStore: @unchecked Sendable {
 
     /// Alle gewünschten Pieces sind geprüft.
     public var isComplete: Bool { lock.lock(); defer { lock.unlock() }; return wantedValidCount == wantedTotal }
+    /// `restore` hat einen passenden Bitfield gesetzt. Der Start darf die Platte dann nicht neu lesen.
+    public var hasTrustedBitfield: Bool { lock.lock(); defer { lock.unlock() }; return trustedBitfield }
     public var wantedPieceCount: Int { lock.lock(); defer { lock.unlock() }; return wantedTotal }
     public var wantedValidPieceCount: Int { lock.lock(); defer { lock.unlock() }; return wantedValidCount }
     public var wantedBytes: Int64 { lock.lock(); defer { lock.unlock() }; return wantedTotalBytes }
@@ -200,6 +204,7 @@ public final class PieceStore: @unchecked Sendable {
         guard bitfield.count == (torrent.numberOfPieces + 7) / 8 else { return }
         lock.lock(); defer { lock.unlock() }
         bitset = bitfield
+        trustedBitfield = true
         validCount = 0; validByteCount = 0
         for i in 0..<torrent.numberOfPieces where bit(i) {
             validCount += 1

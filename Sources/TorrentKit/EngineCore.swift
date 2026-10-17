@@ -146,7 +146,10 @@ actor EngineCore {
     private var lastUpBytes: Int64 = 0
     private var downSpeed: Int64 = 0
     private var upSpeed: Int64 = 0
-    private var availability: [Int]
+    /// Byte-Deltas der letzten Sekunde, in ¼-s-Schritten. Die Anzeige erneuert sich viermal pro Sekunde.
+    private var downSamples: [Int64] = []
+    private var upSamples: [Int64] = []
+    private var availability: [Int] = []
     private var downBudget: Int64 = 0
     private var upBudget: Int64 = 0
     private var uploadQueue: [(peer: Peer, piece: Int, offset: Int, length: Int)] = []
@@ -171,7 +174,6 @@ actor EngineCore {
         self.sink = sink
         self.peerID = Self.makePeerID()
         self.port = Int.random(in: 6881...6999)
-        self.availability = Array(repeating: 0, count: torrent.numberOfPieces)
     }
 
     func configure(_ s: EngineSettings) { settings = s }
@@ -245,19 +247,26 @@ actor EngineCore {
             return
         }
         running = true
+        if availability.count != torrent.numberOfPieces {
+            availability = Array(repeating: 0, count: torrent.numberOfPieces)
+        }
         peerID = Self.makePeerID() // Anonymer Modus wirkt ab dem nächsten Start
-        setState(.scanning)
-        log(String(localized: "Scan: vorhandene Pieces werden geprüft…", bundle: .main))
         if (try? store.prepareFiles()) == nil {
             log(String(localized: "Dateien konnten nicht angelegt werden", bundle: .main))
             running = false
             setState(.failed(String(localized: "Dateianlage fehlgeschlagen", bundle: .main)))
             return
         }
-        await scan()
-        guard running else { return }
-        let valid = store.validatedCount
-        log(String(localized: "Scan: \(valid)/\(torrent.numberOfPieces) Pieces gültig.", bundle: .main))
+        // ponytail: gespeicherter Bitfield gilt, kein Rescan. Stücke aus den letzten ~10 s vor einem Absturz fehlen dann; „Erneut prüfen“ hasht alles.
+        if store.hasTrustedBitfield {
+            log(String(localized: "Gespeicherter Stand, kein erneuter Scan.", bundle: .main))
+        } else {
+            setState(.scanning)
+            log(String(localized: "Scan: vorhandene Pieces werden geprüft…", bundle: .main))
+            await scan()
+            guard running else { return }
+            log(String(localized: "Scan: \(store.validatedCount)/\(torrent.numberOfPieces) Pieces gültig.", bundle: .main))
+        }
         log(String(localized: "Info-Hash \(torrent.infoHashHex) · Peer-ID \(String(decoding: peerID.prefix(8), as: UTF8.self)) · Port \(port)", bundle: .main))
         if torrent.trackerURLs.isEmpty {
             log(String(localized: "Keine Tracker-URL in der Torrent-Datei", bundle: .main))
@@ -298,10 +307,11 @@ actor EngineCore {
         openBlocks = []
         dupRequests = [:]
         uploadQueue = []
-        availability = Array(repeating: 0, count: torrent.numberOfPieces)
+        availability = []
         downSpeed = 0; upSpeed = 0
+        downSamples = []; upSamples = []
         optimisticID = nil
-        setState(.paused)
+        setState(isComplete ? .done : .paused)
     }
 
     func recheck() async {
@@ -739,7 +749,7 @@ actor EngineCore {
         }
         guard writing.insert(piece).inserted else { return }
         let store = self.store
-        let expected = torrent.pieceHashes[piece]
+        let expected = torrent.pieceHash(piece)
         Task {
             // SHA-1 im Speicher + Schreiben, beides abseits des Actors.
             let result: Int = await Task.detached {
@@ -874,7 +884,7 @@ actor EngineCore {
         for i in 0..<torrent.numberOfPieces where have[i / 8] & (1 << (7 - i % 8)) == 0 && store.isWanted(i) {
             missing += 1
             guard partial[i] == nil, peer.has(i) else { continue }
-            let c = availability[i]
+            let c = i < availability.count ? availability[i] : 0
             if c < bestCount { bestCount = c; best = [i] }
             else if c == bestCount { best.append(i) }
         }
@@ -948,24 +958,31 @@ actor EngineCore {
     private func probeLoop() async {
         var tick = 0
         while running {
-            try? await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(for: .milliseconds(250))
             // stop() bricht den Sleep ab; ohne diese Prüfung überschreibt ein letzter Durchlauf die auf 0 gesetzte Rate.
             guard running else { return }
             tick += 1
-            if tick % 5 == 0 { for peer in peers { send(peer, Data()) } } // Keep-alive, Länge 0
-            if tick % 10 == 0 { rechoke() }
-            // Geglättet (EMA), sonst springt die Anzeige im Sekundentakt.
+            if tick % 20 == 0 { for peer in peers { send(peer, Data()) } } // Keep-alive alle 5 s
+            if tick % 40 == 0 { rechoke() } // alle 10 s
             let d = max(0, downloadedBytes - lastDownBytes), u = max(0, uploadedBytes - lastUpBytes)
-            downSpeed = downSpeed == 0 ? d : (downSpeed * 7 + d * 3) / 10
-            upSpeed = upSpeed == 0 ? u : (upSpeed * 7 + u * 3) / 10
             lastDownBytes = downloadedBytes
             lastUpBytes = uploadedBytes
+            downSpeed = Self.bytesPerSecond(d, into: &downSamples)
+            upSpeed = Self.bytesPerSecond(u, into: &upSamples)
             for p in peers {
-                p.downRate = p.downBytes - p.lastDown; p.upRate = p.upBytes - p.lastUp
+                p.downRate = (p.downBytes - p.lastDown) * 4
+                p.upRate = (p.upBytes - p.lastUp) * 4
                 p.lastDown = p.downBytes; p.lastUp = p.upBytes
             }
-            flush(force: true, withPeers: true)
+            flush(force: true, withPeers: tick % 4 == 0)
         }
+    }
+
+    /// Summe der letzten bis zu vier ¼-s-Deltas, hochgerechnet auf Bytes/s.
+    private static func bytesPerSecond(_ delta: Int64, into samples: inout [Int64]) -> Int64 {
+        samples.append(delta)
+        if samples.count > 4 { samples.removeFirst() }
+        return samples.reduce(0, +) * 4 / Int64(samples.count)
     }
 
     // MARK: - PeerID

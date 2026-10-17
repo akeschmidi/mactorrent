@@ -11,6 +11,7 @@
 		047975FE607E795AD4E12746 /* PieceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A413583556C43825B05A7 /* PieceStore.swift */; };
 		07E4AEBA97325BBC1A73D6E0 /* TorrentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F8A399797C87C23A12D16B /* TorrentKit.framework */; };
 		1A708A2828B829883E408EA7 /* TorrentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1275EE43AD45228DD6508 /* TorrentInfo.swift */; };
+		1AC5F16685E0A1D812BE2852 /* DebugDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BE13879B3B67DC729DC248 /* DebugDemo.swift */; };
 		1F7F00B329EEBD281308CED4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9E40938E26C0DB5A0A29C19A /* Localizable.xcstrings */; };
 		21D5599D196390557EA0C738 /* TorrentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34107BC7345EA020E7AE88 /* TorrentRowView.swift */; };
 		28490D0249A4E8C79AFB58E8 /* UDPTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A94DBF43FB770A6D7DE7 /* UDPTracker.swift */; };
@@ -113,6 +114,7 @@
 		A79F1090CEDC262F3C98EFD9 /* PeerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerConnection.swift; sourceTree = "<group>"; };
 		AFD0576348B9FAC0FA0B1527 /* DownloadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsView.swift; sourceTree = "<group>"; };
 		B0F8A399797C87C23A12D16B /* TorrentKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TorrentKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6BE13879B3B67DC729DC248 /* DebugDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDemo.swift; sourceTree = "<group>"; };
 		BA70A94DBF43FB770A6D7DE7 /* UDPTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPTracker.swift; sourceTree = "<group>"; };
 		BAC34C53CA8F10CA30CD7E3A /* PeerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerMessage.swift; sourceTree = "<group>"; };
 		C1003698A17C9C4E2805433B /* TorrentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentParser.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				38E6CA72F4078EE767584023 /* AddTorrentsSheet.swift */,
 				278CD9A4B3E18FA808E8CD7E /* AppModel.swift */,
+				B6BE13879B3B67DC729DC248 /* DebugDemo.swift */,
 				AFD0576348B9FAC0FA0B1527 /* DownloadsView.swift */,
 				00C28A4A3A9C19F35CC6653D /* FolderAccess.swift */,
 				CFD42D643EECD56BABCE2A85 /* Format.swift */,
@@ -369,6 +372,7 @@
 			files = (
 				7CDA1160DEBCCC441CF59531 /* AddTorrentsSheet.swift in Sources */,
 				4F71DFEF0ACC3C07C5DB1DD3 /* AppModel.swift in Sources */,
+				1AC5F16685E0A1D812BE2852 /* DebugDemo.swift in Sources */,
 				E29F6B071E4B5A79126BC572 /* DownloadsView.swift in Sources */,
 				EF118897EF8D19BEBB58B8E4 /* FolderAccess.swift in Sources */,
 				C3F9702513EF4D69503D62A0 /* Format.swift in Sources */,
