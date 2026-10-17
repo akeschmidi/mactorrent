@@ -5,7 +5,6 @@ import TorrentKit
 @main
 struct MacTorrentApp: App {
     @StateObject private var model = AppModel()
-    @AppStorage(Pref.menuBar) private var showMenuBar = true
 
     #if DEBUG
     /// Nur Debug: `--snapshot` rendert das Hauptfenster in `<Container>/tmp/snap.png` und beendet die App.
@@ -40,51 +39,98 @@ struct MacTorrentApp: App {
                     .disabled(!model.items.contains { $0.engine.isValid })
             }
         }
-        MenuBarExtra(isInserted: $showMenuBar) {
-            MenuBarContent(model: model)
-        } label: {
-            MenuBarLabel(model: model)
-        }
         Settings { SettingsView(model: model) }
     }
 }
 
-/// Menüleisten-Symbol: bei Aktivität mit aktuellen Raten, sonst nur das Symbol.
-struct MenuBarLabel: View {
-    @ObservedObject var model: AppModel
+/// Menüleiste ohne SwiftUI-`MenuBarExtra`: dessen Symbol-Button beobachtet sein eigenes Aussehen
+/// und zeichnet sich deshalb dauernd neu (KVO → updateButton → setImage → neuer Snapshot).
+@MainActor
+final class MenuBarController: NSObject, NSMenuDelegate {
+    static let shared = MenuBarController()
+    private var item: NSStatusItem?
+    private var model: AppModel?
+    private var openMain: () -> Void = {}
+    private var title = ""
+    private var observing = false
 
-    var body: some View {
-        if model.totalDown > 0 || model.totalUp > 0 {
-            Text("↓\(Fmt.compactRate(model.totalDown)) ↑\(Fmt.compactRate(model.totalUp))")
-        } else {
-            Image(systemName: "arrow.up.arrow.down.circle")
+    func attach(_ model: AppModel, open: @escaping () -> Void) {
+        self.model = model
+        openMain = open
+        if !observing {
+            observing = true
+            NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.applyVisibility() }
+            }
+        }
+        applyVisibility()
+    }
+
+    /// Nur aufrufen, wenn sich die angezeigte Rate geändert haben kann. Gleicher Text tut nichts.
+    func refreshTitle() {
+        guard let model, let button = item?.button else { return }
+        let text = (model.totalDown > 0 || model.totalUp > 0)
+            ? "↓\(Fmt.compactRate(model.totalDown)) ↑\(Fmt.compactRate(model.totalUp))" : ""
+        guard text != title else { return }
+        title = text
+        button.title = text
+    }
+
+    private func applyVisibility() {
+        let want = UserDefaults.standard.bool(forKey: Pref.menuBar)
+        if want, item == nil {
+            let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+            let image = NSImage(systemSymbolName: "arrow.up.arrow.down.circle", accessibilityDescription: "MacTorrent")
+            image?.isTemplate = true
+            item.button?.image = image
+            item.button?.imagePosition = .imageLeading
+            let menu = NSMenu()
+            menu.delegate = self
+            item.menu = menu
+            self.item = item
+            title = ""
+            refreshTitle()
+        } else if !want, let item {
+            NSStatusBar.system.removeStatusItem(item)
+            self.item = nil
+            title = ""
         }
     }
-}
 
-struct MenuBarContent: View {
-    @ObservedObject var model: AppModel
-    @Environment(\.openWindow) private var openWindow
-
-    var body: some View {
+    func menuWillOpen(_ menu: NSMenu) {
+        menu.removeAllItems()
+        guard let model else { return }
+        let rates = NSMenuItem(title: "↓ \(Fmt.rate(model.totalDown))    ↑ \(Fmt.rate(model.totalUp))", action: nil, keyEquivalent: "")
+        rates.isEnabled = false
+        menu.addItem(rates)
         let running = model.items.filter { $0.engine.isRunning }
-        Text("↓ \(Fmt.rate(model.totalDown))    ↑ \(Fmt.rate(model.totalUp))")
-        if !running.isEmpty { Divider() }
-        ForEach(running.prefix(8)) { item in
-            Text("\(item.name) – \(Fmt.percent(item.engine.progress.fraction))")
+        if !running.isEmpty {
+            menu.addItem(.separator())
+            for item in running.prefix(8) {
+                let row = NSMenuItem(title: "\(item.name) – \(Fmt.percent(item.engine.progress.fraction))", action: nil, keyEquivalent: "")
+                row.isEnabled = false
+                menu.addItem(row)
+            }
         }
-        Divider()
-        Button(running.isEmpty ? "Alle fortsetzen" : "Alle pausieren") {
-            running.isEmpty ? model.resumeAll() : model.pauseAll()
-        }
-        .disabled(model.items.isEmpty)
-        Button("Fenster öffnen") {
-            openWindow(id: "main")
-            NSApp.activate(ignoringOtherApps: true)
-        }
-        Divider()
-        Button("MacTorrent beenden") { NSApp.terminate(nil) }
+        menu.addItem(.separator())
+        let toggle = NSMenuItem(title: running.isEmpty ? "Alle fortsetzen" : "Alle pausieren",
+                                 action: #selector(toggleAll), keyEquivalent: "")
+        toggle.target = self
+        toggle.isEnabled = !model.items.isEmpty
+        menu.addItem(toggle)
+        let open = NSMenuItem(title: "Fenster öffnen", action: #selector(openWindowItem), keyEquivalent: "")
+        open.target = self
+        menu.addItem(open)
+        menu.addItem(.separator())
+        menu.addItem(NSMenuItem(title: "MacTorrent beenden", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
     }
+
+    @objc private func toggleAll() {
+        guard let model else { return }
+        model.items.contains { $0.engine.isRunning } ? model.pauseAll() : model.resumeAll()
+    }
+
+    @objc private func openWindowItem() { openMain() }
 }
 
 #if DEBUG

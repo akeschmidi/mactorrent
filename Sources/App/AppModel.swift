@@ -205,6 +205,7 @@ final class AppModel: ObservableObject {
         }
         if down != totalDown { totalDown = down }
         if up != totalUp { totalUp = up }
+        MenuBarController.shared.refreshTitle()
     }
 
     private func secondTick() {

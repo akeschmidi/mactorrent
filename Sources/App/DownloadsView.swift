@@ -32,6 +32,7 @@ enum SortKey: String, CaseIterable, Identifiable {
 
 struct DownloadsView: View {
     @ObservedObject var model: AppModel
+    @Environment(\.openWindow) private var openWindow
     @State private var filter: Filter? = .all
     @State private var selection = Set<UUID>()
     @State private var search = ""
@@ -91,6 +92,10 @@ struct DownloadsView: View {
             if CommandLine.arguments.contains("--demo-select"), let first = model.items.first { selection = [first.id] }
             if DebugSnapshot.requested { return } // kein Ordner-Dialog beim Schnappschuss
             #endif
+            MenuBarController.shared.attach(model) {
+                openWindow(id: "main")
+                NSApp.activate(ignoringOtherApps: true)
+            }
             DispatchQueue.main.async { model.ensureBaseDir() }
         }
         .sheet(isPresented: $model.showAddSheet) { AddTorrentsSheet(model: model) }
